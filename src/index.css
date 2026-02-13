@@ -1,176 +1,35 @@
-.register-login {
-  width: 100%;
-  height: 100vh;
-  background: rgb(2, 0, 36);
-  background: linear-gradient(
-    90deg,
-    rgba(2, 0, 36, 1) 0%,
-    rgba(9, 9, 121, 1) 35%,
-    rgba(0, 212, 255, 1) 100%
-  );
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom Animation Delays for Blob Effect */
+.animation-delay-2000 {
+  animation-delay: 2s;
 }
 
-.register-login-main {
-  width: 380px;
-  background-color: white;
+.animation-delay-4000 {
+  animation-delay: 4s;
 }
 
-.page-title {
-  font-size: 30px;
-  /* color: rgba(0, 0, 0, 0.683); */
-  color: #004d7a;
-  font-weight: bold;
+/* Optional: Smooth scrolling */
+html {
+  scroll-behavior: smooth;
 }
 
-.apply-form-btn {
-  font-size: 20px;
-  height: 50px;
-  width: 145px;
-  margin-right: 55px;
-  background-image: linear-gradient(
-    to right top,
-    #051937,
-    #004d7a,
-    #008793,
-    #00bf72,
-    #a8eb12
-  );
+/* Optional: Custom scrollbar for webkit browsers */
+::-webkit-scrollbar {
+  width: 10px;
 }
 
-label {
-  font-weight: bold;
-  color: rgba(0, 0, 0, 0.596);
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
 }
 
-.antd-timePicker {
-  border-color: rgba(128, 128, 128, 0.397) !important;
+::-webkit-scrollbar-thumb {
+  background: #1e2756;
+  border-radius: 5px;
 }
 
-.tableData {
-  cursor: pointer;
-}
-
-.appointment-image {
-  width: 350px;
-  height: auto;
-  display: flex;
-  align-items: end;
-}
-
-.datePicker {
-  height: 40px !important;
-  border: none;
-  padding-left: 15px;
-  font-size: 18px;
-}
-
-.input-date {
-  border-color: #004d7a !important;
-  cursor: pointer;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-.date-icon {
-  font-size: 30px;
-  margin-right: 15px;
-}
-
-.bookAppointment-btn {
-  border-radius: 10px;
-  height: 45px;
-  background-image: linear-gradient(
-    to right top,
-    #051937,
-    #004d7a,
-    #008793,
-    #00bf72,
-    #a8eb12
-  ) !important;
-  color: white;
-  border: none;
-  outline: none;
-  font-size: large;
-  cursor: pointer;
-}
-
-.home-cards {
-  box-shadow: 0 4px 8px 0 rgba(5, 25, 55, 0.2),
-    0 6px 20px 0 rgba(0, 77, 122, 0.2), 0 8px 16px 0 rgba(0, 135, 147, 0.2),
-    0 0 0 2px rgba(0, 191, 114, 0.2), 0 0 0 4px rgba(168, 235, 18, 0.2);
-}
-
-.home-cards:hover {
-  border: 1px solid #004d7a;
-}
-
-.image {
-  width: 100px;
-  border-radius: 50%;
-  margin-bottom: 20px;
-}
-
-.role {
-  margin-left: 10px;
-  font-size: larger;
-}
-
-.doctor-btn {
-  width: 100px;
-  height: 33px;
-  margin-right: 10px;
-  padding-left: 15px;
-  padding-right: 15px;
-  padding-bottom: 3px;
-  outline: none;
-  border: none;
-  background-image: linear-gradient(
-    to right top,
-    #051937,
-    #004d7a,
-    #008793,
-    #00bf72,
-    #a8eb12
-  ) !important;
-  color: white;
-}
-.doctor-btn-reject {
-  width: 100px;
-  height: 33px;
-  margin-right: 10px;
-  padding-left: 15px;
-  padding-right: 15px;
-  padding-bottom: 3px;
-  outline: none;
-  border: none;
-  background-image: linear-gradient(to right top, #7b4397,#b98888, #dc2430) !important;
-  color: white;
-}
-
-.doctor-block-btn {
-  width: 100px;
-  height: 33px;
-  margin-right: 10px;
-  padding-left: 15px;
-  padding-right: 15px;
-  padding-bottom: 3px;
-  outline: none;
-  border: none;
-  background-image: linear-gradient(to right top, #7b4397, #dc2430) !important;
-  color: white;
-}
-
-.header-username {
-  background: -webkit-linear-gradient(
-    #051329,
-    #084568,
-    #0f8e9a,
-    #28cf8c,
-    #a9ea1d
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-size: 40px;
-}
-
-.dr-card-name {
-  color: #004d7a;
+::-webkit-scrollbar-thumb:hover {
+  background: #2a3b75;
 }
