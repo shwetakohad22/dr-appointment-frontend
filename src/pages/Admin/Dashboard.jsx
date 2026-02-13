@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../../components/Layout";
-import axios from "axios";
+import api from "../../api";
 import {
   BarChart,
   Bar,
@@ -34,19 +34,14 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const doctorsRes = await axios.get(
-          "http://localhost:8001/api/admin/get-all-doctors",
-        );
-        const usersRes = await axios.get(
-          "http://localhost:8001/api/admin/get-all-users",
-        );
+        const doctorsRes = await api.get("/api/admin/get-all-doctors");
+        const usersRes = await api.get("/api/admin/get-all-users");
 
         // Fetch Admin Profile for Notifications
         const userId = localStorage.getItem("userId");
-        const userRes = await axios.get(
-          `http://localhost:8001/api/user/get-user-by-id`,
-          { params: { userId } },
-        );
+        const userRes = await api.get(`/api/user/get-user-by-id`, {
+          params: { userId },
+        });
 
         // Potential future addition: appointments
         // const appointmentsRes = await axios.get("http://localhost:8001/api/admin/get-all-appointments");

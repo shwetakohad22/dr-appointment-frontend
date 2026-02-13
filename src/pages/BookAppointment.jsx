@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../components/Layout";
-import axios from "axios";
+import api from "../api";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import toast from "react-hot-toast";
@@ -35,12 +35,9 @@ const BookAppointment = () => {
       try {
         const doctorId = localStorage.getItem("selectedDoctorId");
         if (doctorId) {
-          const response = await axios.post(
-            "http://localhost:8001/api/doctor/get-doctor-id",
-            {
-              doctorId: doctorId,
-            },
-          );
+          const response = await api.post("/api/doctor/get-doctor-id", {
+            doctorId: doctorId,
+          });
           setDoctorInfo(response.data.data);
         }
       } catch (error) {
@@ -59,23 +56,17 @@ const BookAppointment = () => {
     setBookingLoading(true);
     try {
       const userId = localStorage.getItem("userId");
-      const userRes = await axios.get(
-        `http://localhost:8001/api/user/get-user-by-id`,
-        {
-          params: { userId },
-        },
-      );
+      const userRes = await api.get(`/api/user/get-user-by-id`, {
+        params: { userId },
+      });
 
-      const response = await axios.post(
-        "http://localhost:8001/api/user/book-appointment",
-        {
-          userId: userId,
-          doctorId: doctorInfo._id,
-          doctorInfo: doctorInfo,
-          userInfo: userRes.data.data || {},
-          date: selectedDate,
-        },
-      );
+      const response = await api.post("/api/user/book-appointment", {
+        userId: userId,
+        doctorId: doctorInfo._id,
+        doctorInfo: doctorInfo,
+        userInfo: userRes.data.data || {},
+        date: selectedDate,
+      });
       if (response.data.success) {
         toast.success(response.data.message);
         navigate("/appointments");

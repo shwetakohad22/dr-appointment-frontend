@@ -12,7 +12,7 @@ import {
 import { CgProfile } from "react-icons/cg";
 import { IoMdLogOut, IoIosNotificationsOutline } from "react-icons/io";
 import { FaUserFriends } from "react-icons/fa";
-import axios from "axios";
+import api from "../api";
 import { Badge } from "antd";
 
 const Layout = ({ children }) => {
@@ -33,14 +33,11 @@ const Layout = ({ children }) => {
   const fetchUser = async () => {
     try {
       const userId = localStorage.getItem("userId");
-      const response = await axios.get(
-        `http://localhost:8001/api/user/get-user-by-id`,
-        {
-          params: {
-            userId,
-          },
+      const response = await api.get(`/api/user/get-user-by-id`, {
+        params: {
+          userId,
         },
-      );
+      });
       setUserRole(
         response.data.data.isAdmin
           ? "admin"

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../../components/Layout";
-import axios from "axios";
+import api from "../../api";
 import toast from "react-hot-toast";
-import { 
-  FaCalendarAlt, 
-  FaUser, 
-  FaEnvelope, 
-  FaClock, 
-  FaCheckCircle, 
-  FaTimesCircle, 
+import {
+  FaCalendarAlt,
+  FaUser,
+  FaEnvelope,
+  FaClock,
+  FaCheckCircle,
+  FaTimesCircle,
   FaHourglassHalf,
   FaCheck,
   FaTimes,
@@ -25,13 +25,10 @@ const DoctorAppointments = () => {
 
   const changeAppointmentStatus = async (appointmentId, status) => {
     try {
-      const response = await axios.post(
-        "http://localhost:8001/api/doctor/change-appointment-status",
-        {
-          appointmentId,
-          status,
-        }
-      );
+      const response = await api.post("/api/doctor/change-appointment-status", {
+        appointmentId,
+        status,
+      });
       toast.success(response.data.message);
       getAppointmentsData();
     } catch (error) {
@@ -44,18 +41,18 @@ const DoctorAppointments = () => {
     try {
       setLoading(true);
       const userId = localStorage.getItem("userId");
-      const response = await axios.get(
-        `http://localhost:8001/api/doctor/get-appointments-by-doctor-id`,
+      const response = await api.get(
+        `/api/doctor/get-appointments-by-doctor-id`,
         {
           params: {
             userId: userId,
           },
-        }
+        },
       );
       if (response.data.success) {
         const formattedAppointments = await Promise.all(
           response.data.data.map(async (appointment) => {
-            const userResponse = await axios.get(`http://localhost:8001/api/user/get-user-by-id`, {
+            const userResponse = await api.get(`/api/user/get-user-by-id`, {
               params: {
                 userId: appointment.userId,
               },
@@ -66,10 +63,10 @@ const DoctorAppointments = () => {
               user: user ? { name: user.name, email: user.email } : null,
               date: new Date(appointment.date).toLocaleDateString("en-GB"),
             };
-          })
+          }),
         );
         formattedAppointments.sort(
-          (a, b) => new Date(b.date) - new Date(a.date)
+          (a, b) => new Date(b.date) - new Date(a.date),
         );
         setAppointments(formattedAppointments);
       } else {
@@ -109,19 +106,24 @@ const DoctorAppointments = () => {
   };
 
   // Filter appointments
-  const filteredAppointments = appointments.filter(app => {
-    const matchesFilter = filter === "all" || app.status.toLowerCase() === filter;
-    const matchesSearch = app.user?.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          app.user?.email?.toLowerCase().includes(searchTerm.toLowerCase());
+  const filteredAppointments = appointments.filter((app) => {
+    const matchesFilter =
+      filter === "all" || app.status.toLowerCase() === filter;
+    const matchesSearch =
+      app.user?.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      app.user?.email?.toLowerCase().includes(searchTerm.toLowerCase());
     return matchesFilter && matchesSearch;
   });
 
   // Get counts
   const counts = {
     all: appointments.length,
-    pending: appointments.filter(a => a.status.toLowerCase() === 'pending').length,
-    approved: appointments.filter(a => a.status.toLowerCase() === 'approved').length,
-    rejected: appointments.filter(a => a.status.toLowerCase() === 'rejected').length,
+    pending: appointments.filter((a) => a.status.toLowerCase() === "pending")
+      .length,
+    approved: appointments.filter((a) => a.status.toLowerCase() === "approved")
+      .length,
+    rejected: appointments.filter((a) => a.status.toLowerCase() === "rejected")
+      .length,
   };
 
   return (
@@ -267,7 +269,8 @@ const DoctorAppointments = () => {
                     <div className="flex-1 flex items-start gap-3">
                       <div className="w-12 h-12 bg-gradient-to-br from-deep-blue to-blue-900 rounded-xl flex items-center justify-center text-white flex-shrink-0">
                         <span className="text-xl font-bold">
-                          {appointment.user?.name?.charAt(0)?.toUpperCase() || "?"}
+                          {appointment.user?.name?.charAt(0)?.toUpperCase() ||
+                            "?"}
                         </span>
                       </div>
                       <div className="flex-1">
@@ -280,7 +283,9 @@ const DoctorAppointments = () => {
                         <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-gray-600">
                           <div className="flex items-center gap-1.5">
                             <FaEnvelope className="text-gray-400 text-[10px]" />
-                            <span className="truncate">{appointment.user?.email || "N/A"}</span>
+                            <span className="truncate">
+                              {appointment.user?.email || "N/A"}
+                            </span>
                           </div>
                         </div>
                       </div>
@@ -329,7 +334,12 @@ const DoctorAppointments = () => {
                       {appointment.status.toLowerCase() === "pending" && (
                         <div className="flex gap-2">
                           <button
-                            onClick={() => changeAppointmentStatus(appointment._id, "approved")}
+                            onClick={() =>
+                              changeAppointmentStatus(
+                                appointment._id,
+                                "approved",
+                              )
+                            }
                             className="bg-gradient-to-br from-emerald-500 to-teal-500 text-white font-bold px-4 py-2 rounded-lg hover:shadow-lg transition-all flex items-center gap-1.5 text-sm"
                             title="Approve"
                           >
@@ -337,7 +347,12 @@ const DoctorAppointments = () => {
                             <span>Approve</span>
                           </button>
                           <button
-                            onClick={() => changeAppointmentStatus(appointment._id, "rejected")}
+                            onClick={() =>
+                              changeAppointmentStatus(
+                                appointment._id,
+                                "rejected",
+                              )
+                            }
                             className="bg-gradient-to-br from-red-400 to-red-500 text-white font-bold px-4 py-2 rounded-lg hover:shadow-lg transition-all flex items-center gap-1.5 text-sm"
                             title="Reject"
                           >
@@ -365,19 +380,25 @@ const DoctorAppointments = () => {
                 </p>
               </div>
               <div className="text-center p-3 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-lg shadow-sm">
-                <p className="text-xs text-white/90 mb-1 font-medium">Approved</p>
+                <p className="text-xs text-white/90 mb-1 font-medium">
+                  Approved
+                </p>
                 <p className="text-xl font-bold text-white">
                   {counts.approved}
                 </p>
               </div>
               <div className="text-center p-3 bg-gradient-to-br from-card-yellow to-yellow-400 rounded-lg shadow-sm">
-                <p className="text-xs text-deep-blue/90 mb-1 font-medium">Pending</p>
+                <p className="text-xs text-deep-blue/90 mb-1 font-medium">
+                  Pending
+                </p>
                 <p className="text-xl font-bold text-deep-blue">
                   {counts.pending}
                 </p>
               </div>
               <div className="text-center p-3 bg-gradient-to-br from-red-400 to-red-500 rounded-lg shadow-sm">
-                <p className="text-xs text-white/90 mb-1 font-medium">Rejected</p>
+                <p className="text-xs text-white/90 mb-1 font-medium">
+                  Rejected
+                </p>
                 <p className="text-xl font-bold text-white">
                   {counts.rejected}
                 </p>

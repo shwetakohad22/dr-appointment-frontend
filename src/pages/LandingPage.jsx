@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "../api";
 import { useEffect, useState } from "react";
 import {
   FaAngleDown,
@@ -27,9 +27,7 @@ const LandingPage = () => {
   useEffect(() => {
     const fetchDoctors = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:8001/api/user/get-all-approved-doctors",
-        );
+        const response = await api.get("/api/user/get-all-approved-doctors");
         if (response.data.success) {
           setDoctors(response.data.data);
         }

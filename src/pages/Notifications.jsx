@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../components/Layout";
-import axios from "axios";
+import api from "../api";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import {
@@ -22,14 +22,11 @@ const Notifications = () => {
   const getUser = async () => {
     try {
       setLoading(true);
-      const res = await axios.get(
-        "http://localhost:8001/api/user/get-user-by-id",
-        {
-          params: {
-            userId: localStorage.getItem("userId"),
-          },
+      const res = await api.get("/api/user/get-user-by-id", {
+        params: {
+          userId: localStorage.getItem("userId"),
         },
-      );
+      });
       if (res.data.success) {
         setUser(res.data.data);
       } else {
@@ -45,10 +42,9 @@ const Notifications = () => {
 
   const markAllAsSeen = async () => {
     try {
-      const res = await axios.post(
-        "http://localhost:8001/api/user/mark-all-notifications-as-seen",
-        { userId: localStorage.getItem("userId") },
-      );
+      const res = await api.post("/api/user/mark-all-notifications-as-seen", {
+        userId: localStorage.getItem("userId"),
+      });
       if (res.data.success) {
         toast.success(res.data.message);
         setUser(res.data.data);
@@ -63,10 +59,9 @@ const Notifications = () => {
 
   const deleteAll = async () => {
     try {
-      const res = await axios.post(
-        "http://localhost:8001/api/user/delete-all-notifications",
-        { userId: localStorage.getItem("userId") },
-      );
+      const res = await api.post("/api/user/delete-all-notifications", {
+        userId: localStorage.getItem("userId"),
+      });
       if (res.data.success) {
         toast.success(res.data.message);
         setUser(res.data.data);
@@ -93,7 +88,9 @@ const Notifications = () => {
         <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900 mb-1">Notifications</h1>
+              <h1 className="text-2xl font-bold text-gray-900 mb-1">
+                Notifications
+              </h1>
               <p className="text-sm text-gray-500">
                 Manage your notifications and stay updated
               </p>
@@ -101,12 +98,16 @@ const Notifications = () => {
             <div className="flex items-center gap-4">
               <div className="text-right">
                 <p className="text-xs text-gray-500">Unread</p>
-                <p className="text-2xl font-bold text-deep-blue">{unseenCount}</p>
+                <p className="text-2xl font-bold text-deep-blue">
+                  {unseenCount}
+                </p>
               </div>
               <div className="h-12 w-px bg-gray-200"></div>
               <div className="text-right">
                 <p className="text-xs text-gray-500">Total</p>
-                <p className="text-2xl font-bold text-gray-700">{unseenCount + seenCount}</p>
+                <p className="text-2xl font-bold text-gray-700">
+                  {unseenCount + seenCount}
+                </p>
               </div>
             </div>
           </div>
@@ -181,7 +182,9 @@ const Notifications = () => {
                 <div className="relative">
                   <div className="w-12 h-12 border-4 border-gray-200 border-t-deep-blue rounded-full animate-spin"></div>
                 </div>
-                <p className="text-gray-500 mt-3 text-sm">Loading notifications...</p>
+                <p className="text-gray-500 mt-3 text-sm">
+                  Loading notifications...
+                </p>
               </div>
             ) : (
               <div className="space-y-2">

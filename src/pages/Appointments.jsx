@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../components/Layout";
-import axios from "axios";
+import api from "../api";
 import {
   FaCalendarCheck,
   FaUserMd,
@@ -24,8 +24,8 @@ const Appointments = () => {
   const getAppointmentsData = async () => {
     try {
       const userId = localStorage.getItem("userId");
-      const response = await axios.get(
-        `http://localhost:8001/api/user/get-appointments-by-user-id?userId=${userId}`
+      const response = await api.get(
+        `/api/user/get-appointments-by-user-id?userId=${userId}`,
       );
       if (response.data.success) {
         const formattedAppointments = response.data.data.map((appointment) => ({
@@ -53,11 +53,12 @@ const Appointments = () => {
     const matchesSearch =
       appointment.doctorInfo.firstName?.toLowerCase().includes(searchLower) ||
       appointment.doctorInfo.lastName?.toLowerCase().includes(searchLower) ||
-      appointment.doctorInfo.specialization?.toLowerCase().includes(searchLower);
-    
-    const matchesStatus = 
-      filterStatus === "All" || 
-      appointment.status === filterStatus;
+      appointment.doctorInfo.specialization
+        ?.toLowerCase()
+        .includes(searchLower);
+
+    const matchesStatus =
+      filterStatus === "All" || appointment.status === filterStatus;
 
     return matchesSearch && matchesStatus;
   });
@@ -282,31 +283,39 @@ const Appointments = () => {
                 </p>
               </div>
               <div className="text-center p-3 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-lg shadow-sm">
-                <p className="text-xs text-white/90 mb-1 font-medium">Approved</p>
+                <p className="text-xs text-white/90 mb-1 font-medium">
+                  Approved
+                </p>
                 <p className="text-xl font-bold text-white">
                   {
-                    appointments.filter((a) => a.status?.toLowerCase() === "approved")
-                      .length
+                    appointments.filter(
+                      (a) => a.status?.toLowerCase() === "approved",
+                    ).length
                   }
                 </p>
               </div>
               <div className="text-center p-3 bg-gradient-to-br from-card-yellow to-yellow-400 rounded-lg shadow-sm">
-                <p className="text-xs text-deep-blue/90 mb-1 font-medium">Pending</p>
+                <p className="text-xs text-deep-blue/90 mb-1 font-medium">
+                  Pending
+                </p>
                 <p className="text-xl font-bold text-deep-blue">
                   {
-                    appointments.filter((a) => a.status?.toLowerCase() === "pending")
-                      .length
+                    appointments.filter(
+                      (a) => a.status?.toLowerCase() === "pending",
+                    ).length
                   }
                 </p>
               </div>
               <div className="text-center p-3 bg-gradient-to-br from-card-pink to-pink-400 rounded-lg shadow-sm">
-                <p className="text-xs text-deep-blue/90 mb-1 font-medium">Other</p>
+                <p className="text-xs text-deep-blue/90 mb-1 font-medium">
+                  Other
+                </p>
                 <p className="text-xl font-bold text-deep-blue">
                   {
                     appointments.filter(
                       (a) =>
                         a.status?.toLowerCase() !== "approved" &&
-                        a.status?.toLowerCase() !== "pending"
+                        a.status?.toLowerCase() !== "pending",
                     ).length
                   }
                 </p>

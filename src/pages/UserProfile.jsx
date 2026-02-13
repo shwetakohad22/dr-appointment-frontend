@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../components/Layout";
-import axios from "axios";
+import api from "../api";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { FaUser, FaEnvelope, FaSave, FaArrowRight } from "react-icons/fa";
@@ -19,12 +19,9 @@ const UserProfile = () => {
     try {
       setDataLoading(true);
       const userId = localStorage.getItem("userId");
-      const response = await axios.get(
-        `http://localhost:8001/api/user/get-user-by-id`,
-        {
-          params: { userId },
-        },
-      );
+      const response = await api.get(`/api/user/get-user-by-id`, {
+        params: { userId },
+      });
       if (response.data.success) {
         setFormData({
           name: response.data.data.name,
@@ -56,13 +53,10 @@ const UserProfile = () => {
     setLoading(true);
     try {
       const userId = localStorage.getItem("userId");
-      const response = await axios.post(
-        "http://localhost:8001/api/user/update-profile",
-        {
-          ...formData,
-          userId,
-        },
-      );
+      const response = await api.post("/api/user/update-profile", {
+        ...formData,
+        userId,
+      });
       if (response.data.success) {
         toast.success(response.data.message);
         // navigate("/home");

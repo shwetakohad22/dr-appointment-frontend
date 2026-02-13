@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../../components/Layout";
-import axios from "axios";
+import api from "../../api";
 import toast from "react-hot-toast";
 import { TimePicker } from "antd";
 import { useNavigate } from "react-router-dom";
@@ -27,12 +27,9 @@ const Profile = () => {
     try {
       setDataLoading(true);
       const userId = localStorage.getItem("userId");
-      const response = await axios.post(
-        "http://localhost:8001/api/doctor/get-doctor-info-by-id",
-        {
-          userId: userId,
-        },
-      );
+      const response = await api.post("/api/doctor/get-doctor-info-by-id", {
+        userId: userId,
+      });
       setDoctorInfo(response.data.data);
     } catch (error) {
       console.error("Error fetching doctor data:", error);
@@ -83,7 +80,7 @@ const Profile = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post(
+      const response = await api.post(
         "/api/doctor/update-doctor-profile",
         formData,
       );

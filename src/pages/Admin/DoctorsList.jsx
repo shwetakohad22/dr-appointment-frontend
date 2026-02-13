@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../../components/Layout";
-import axios from "axios";
+import api from "../../api";
 import toast from "react-hot-toast";
 import {
   FaUserMd,
@@ -24,7 +24,7 @@ const DoctorsList = () => {
   const getDoctorsData = async () => {
     try {
       setLoading(true);
-      const response = await axios.get("http://localhost:8001/api/admin/get-all-doctors");
+      const response = await api.get("/api/admin/get-all-doctors");
       if (response.data.success) {
         setDoctors(response.data.data);
       }
@@ -38,7 +38,7 @@ const DoctorsList = () => {
 
   const changeDoctorStatus = async (doctorId, status) => {
     try {
-      const response = await axios.post("http://localhost:8001/api/admin/change-doctor-status", {
+      const response = await api.post("/api/admin/change-doctor-status", {
         doctorId,
         status,
       });
@@ -62,9 +62,9 @@ const DoctorsList = () => {
       doctor.lastName?.toLowerCase().includes(searchLower) ||
       doctor.specialization?.toLowerCase().includes(searchLower) ||
       doctor.phoneNumber?.includes(searchLower);
-    
-    const matchesStatus = 
-      filterStatus === "All" || 
+
+    const matchesStatus =
+      filterStatus === "All" ||
       doctor.status?.toLowerCase() === filterStatus.toLowerCase();
 
     return matchesSearch && matchesStatus;
@@ -98,9 +98,12 @@ const DoctorsList = () => {
   // Get counts
   const counts = {
     all: doctors.length,
-    pending: doctors.filter(d => d.status?.toLowerCase() === 'pending').length,
-    approved: doctors.filter(d => d.status?.toLowerCase() === 'approved').length,
-    blocked: doctors.filter(d => d.status?.toLowerCase() === 'blocked').length,
+    pending: doctors.filter((d) => d.status?.toLowerCase() === "pending")
+      .length,
+    approved: doctors.filter((d) => d.status?.toLowerCase() === "approved")
+      .length,
+    blocked: doctors.filter((d) => d.status?.toLowerCase() === "blocked")
+      .length,
   };
 
   return (
@@ -110,12 +113,14 @@ const DoctorsList = () => {
         <div className="bg-white rounded-xl p-3 shadow-sm border border-gray-100">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900 mb-1">Doctors Management</h1>
+              <h1 className="text-2xl font-bold text-gray-900 mb-1">
+                Doctors Management
+              </h1>
               <p className="text-sm text-gray-500">
                 Manage and review all doctor accounts
               </p>
             </div>
-            
+
             {/* Stats Cards - Moved to Header */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
               <div className="text-center p-3 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg border border-gray-200">
@@ -123,16 +128,28 @@ const DoctorsList = () => {
                 <p className="text-2xl font-bold text-gray-800">{counts.all}</p>
               </div>
               <div className="text-center p-3 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-lg shadow-sm">
-                <p className="text-xs text-white/90 mb-1 font-medium">Approved</p>
-                <p className="text-2xl font-bold text-white">{counts.approved}</p>
+                <p className="text-xs text-white/90 mb-1 font-medium">
+                  Approved
+                </p>
+                <p className="text-2xl font-bold text-white">
+                  {counts.approved}
+                </p>
               </div>
               <div className="text-center p-3 bg-gradient-to-br from-card-yellow to-yellow-400 rounded-lg shadow-sm">
-                <p className="text-xs text-deep-blue/90 mb-1 font-medium">Pending</p>
-                <p className="text-2xl font-bold text-deep-blue">{counts.pending}</p>
+                <p className="text-xs text-deep-blue/90 mb-1 font-medium">
+                  Pending
+                </p>
+                <p className="text-2xl font-bold text-deep-blue">
+                  {counts.pending}
+                </p>
               </div>
               <div className="text-center p-3 bg-gradient-to-br from-red-400 to-red-500 rounded-lg shadow-sm">
-                <p className="text-xs text-white/90 mb-1 font-medium">Blocked</p>
-                <p className="text-2xl font-bold text-white">{counts.blocked}</p>
+                <p className="text-xs text-white/90 mb-1 font-medium">
+                  Blocked
+                </p>
+                <p className="text-2xl font-bold text-white">
+                  {counts.blocked}
+                </p>
               </div>
             </div>
           </div>
@@ -239,13 +256,17 @@ const DoctorsList = () => {
                   {filteredDoctors.map((doctor, index) => {
                     const statusBadge = getStatusBadge(doctor.status);
                     return (
-                      <tr key={index} className="hover:bg-gray-50 transition-colors">
+                      <tr
+                        key={index}
+                        className="hover:bg-gray-50 transition-colors"
+                      >
                         {/* Doctor Name */}
                         <td className="px-6 py-4">
                           <div className="flex items-center gap-3">
                             <div className="w-10 h-10 bg-gradient-to-br from-deep-blue to-blue-900 rounded-lg flex items-center justify-center text-white flex-shrink-0">
                               <span className="font-bold text-sm">
-                                {doctor.firstName?.charAt(0)}{doctor.lastName?.charAt(0)}
+                                {doctor.firstName?.charAt(0)}
+                                {doctor.lastName?.charAt(0)}
                               </span>
                             </div>
                             <div>
@@ -253,7 +274,8 @@ const DoctorsList = () => {
                                 <p className="text-sm font-semibold text-gray-900">
                                   Dr. {doctor.firstName} {doctor.lastName}
                                 </p>
-                                {doctor.status?.toLowerCase() === "approved" && (
+                                {doctor.status?.toLowerCase() ===
+                                  "approved" && (
                                   <MdVerified className="text-emerald-500 text-sm" />
                                 )}
                               </div>
@@ -273,7 +295,9 @@ const DoctorsList = () => {
                         <td className="px-6 py-4">
                           <div className="flex items-center gap-1.5">
                             <FaStethoscope className="text-gray-400 text-xs" />
-                            <span className="text-sm text-gray-700">{doctor.specialization}</span>
+                            <span className="text-sm text-gray-700">
+                              {doctor.specialization}
+                            </span>
                           </div>
                         </td>
 
@@ -281,13 +305,17 @@ const DoctorsList = () => {
                         <td className="px-6 py-4">
                           <div className="flex items-center gap-1.5 text-sm text-gray-600">
                             <FaCalendarAlt className="text-gray-400 text-xs" />
-                            <span>{new Date(doctor.createdAt).toLocaleDateString()}</span>
+                            <span>
+                              {new Date(doctor.createdAt).toLocaleDateString()}
+                            </span>
                           </div>
                         </td>
 
                         {/* Status */}
                         <td className="px-6 py-4">
-                          <div className={`inline-flex items-center gap-1.5 px-3 py-1.5 ${statusBadge.bg} ${statusBadge.text} rounded-lg text-xs font-bold`}>
+                          <div
+                            className={`inline-flex items-center gap-1.5 px-3 py-1.5 ${statusBadge.bg} ${statusBadge.text} rounded-lg text-xs font-bold`}
+                          >
                             {statusBadge.icon}
                             <span className="capitalize">{doctor.status}</span>
                           </div>
@@ -298,7 +326,9 @@ const DoctorsList = () => {
                           <div className="flex items-center gap-2">
                             {doctor.status?.toLowerCase() === "pending" && (
                               <button
-                                onClick={() => changeDoctorStatus(doctor._id, "approved")}
+                                onClick={() =>
+                                  changeDoctorStatus(doctor._id, "approved")
+                                }
                                 className="px-3 py-1.5 bg-gradient-to-br from-emerald-500 to-teal-500 text-white text-xs font-medium rounded-lg hover:shadow-lg transition-all flex items-center gap-1"
                               >
                                 <FaCheckCircle className="text-[10px]" />
@@ -307,7 +337,9 @@ const DoctorsList = () => {
                             )}
                             {doctor.status?.toLowerCase() === "approved" && (
                               <button
-                                onClick={() => changeDoctorStatus(doctor._id, "blocked")}
+                                onClick={() =>
+                                  changeDoctorStatus(doctor._id, "blocked")
+                                }
                                 className="px-3 py-1.5 bg-gradient-to-br from-red-400 to-red-500 text-white text-xs font-medium rounded-lg hover:shadow-lg transition-all flex items-center gap-1"
                               >
                                 <FaBan className="text-[10px]" />

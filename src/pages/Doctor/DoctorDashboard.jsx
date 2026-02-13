@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../../components/Layout";
-import axios from "axios";
+import api from "../../api";
 import {
   BarChart,
   Bar,
@@ -37,23 +37,21 @@ const DoctorDashboard = () => {
         const userId = localStorage.getItem("userId");
 
         // 1. Get Doctor Info
-        const doctorRes = await axios.post(
-          "http://localhost:8001/api/doctor/get-doctor-info-by-id",
-          { userId },
-        );
+        const doctorRes = await api.post("/api/doctor/get-doctor-info-by-id", {
+          userId,
+        });
 
         // 2. Get User Info (for notifications)
-        const userRes = await axios.get(
-          `http://localhost:8001/api/user/get-user-by-id`,
-          { params: { userId } },
-        );
+        const userRes = await api.get(`/api/user/get-user-by-id`, {
+          params: { userId },
+        });
 
         if (doctorRes.data.success) {
           setDoctor(doctorRes.data.data);
           // 3. Get Appointments (using doctorId)
           if (doctorRes.data.data) {
-            const appointmentsRes = await axios.get(
-              `http://localhost:8001/api/doctor/get-appointments-by-doctor-id`,
+            const appointmentsRes = await api.get(
+              `/api/doctor/get-appointments-by-doctor-id`,
               { params: { userId } }, // Logic in backend uses userId to find doctor
             );
             if (appointmentsRes.data.success) {

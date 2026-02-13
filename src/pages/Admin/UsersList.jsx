@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../../components/Layout";
-import axios from "axios";
+import api from "../../api";
 import toast from "react-hot-toast";
 import {
   FaUser,
@@ -18,7 +18,7 @@ const UsersList = () => {
   const getUsersData = async () => {
     try {
       setLoading(true);
-      const response = await axios.get("http://localhost:8001/api/admin/get-all-users");
+      const response = await api.get("/api/admin/get-all-users");
       if (response.data.success) {
         setUsers(response.data.data);
       }
@@ -50,15 +50,19 @@ const UsersList = () => {
         <div className="bg-white rounded-xl p-3 shadow-sm border border-gray-100">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
             <div>
-              <h1 className="text-xl font-bold text-gray-900 mb-0.5">Users Management</h1>
+              <h1 className="text-xl font-bold text-gray-900 mb-0.5">
+                Users Management
+              </h1>
               <p className="text-xs text-gray-500">
                 View and manage all registered users
               </p>
             </div>
-            
+
             {/* Stats Card - Compact */}
             <div className="text-center p-2 bg-gradient-to-br from-deep-blue to-blue-900 rounded-lg shadow-sm min-w-[100px]">
-              <p className="text-[10px] text-white/90 mb-0.5 font-medium">Total Users</p>
+              <p className="text-[10px] text-white/90 mb-0.5 font-medium">
+                Total Users
+              </p>
               <p className="text-xl font-bold text-white">{users.length}</p>
             </div>
           </div>
@@ -131,7 +135,10 @@ const UsersList = () => {
                 </thead>
                 <tbody className="divide-y divide-gray-200">
                   {filteredUsers.map((user, index) => (
-                    <tr key={index} className="hover:bg-gray-50 transition-colors">
+                    <tr
+                      key={index}
+                      className="hover:bg-gray-50 transition-colors"
+                    >
                       {/* User Name */}
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-3">
@@ -160,7 +167,9 @@ const UsersList = () => {
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-1.5 text-sm text-gray-600">
                           <FaCalendarAlt className="text-gray-400 text-xs" />
-                          <span>{new Date(user.createdAt).toLocaleDateString()}</span>
+                          <span>
+                            {new Date(user.createdAt).toLocaleDateString()}
+                          </span>
                         </div>
                       </td>
                     </tr>
@@ -172,8 +181,15 @@ const UsersList = () => {
             {/* Table Footer with Count */}
             <div className="bg-gray-50 px-6 py-3 border-t border-gray-200">
               <p className="text-xs text-gray-500">
-                Showing <span className="font-semibold text-gray-700">{filteredUsers.length}</span> of{" "}
-                <span className="font-semibold text-gray-700">{users.length}</span> users
+                Showing{" "}
+                <span className="font-semibold text-gray-700">
+                  {filteredUsers.length}
+                </span>{" "}
+                of{" "}
+                <span className="font-semibold text-gray-700">
+                  {users.length}
+                </span>{" "}
+                users
               </p>
             </div>
           </div>

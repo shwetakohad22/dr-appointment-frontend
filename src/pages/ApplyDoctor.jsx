@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "../api";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import {
@@ -69,8 +69,8 @@ const ApplyDoctor = () => {
         formDataToSend.append("image", formData.image);
       }
 
-      const response = await axios.post(
-        "http://localhost:8001/api/user/apply-doctor-account",
+      const response = await api.post(
+        "/api/user/apply-doctor-account",
         formDataToSend,
       );
 

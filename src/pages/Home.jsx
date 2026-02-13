@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "../api";
 import { useEffect, useState } from "react";
 import {
   FaAward,
@@ -9,7 +9,7 @@ import {
   FaSearch,
   FaStar,
   FaStethoscope,
-  FaUserMd
+  FaUserMd,
 } from "react-icons/fa";
 import { MdVerified } from "react-icons/md";
 import { Link } from "react-router-dom";
@@ -24,9 +24,7 @@ const Home = () => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:8001/api/user/get-all-approved-doctors",
-        );
+        const response = await api.get("/api/user/get-all-approved-doctors");
         setDoctors(response.data.data);
       } catch (error) {
         console.error("Error fetching doctors:", error);
@@ -49,9 +47,9 @@ const Home = () => {
       doctor.firstName?.toLowerCase().includes(searchLower) ||
       doctor.lastName?.toLowerCase().includes(searchLower) ||
       doctor.specialization?.toLowerCase().includes(searchLower);
-    
-    const matchesSpecialty = 
-      selectedSpecialty === "All" || 
+
+    const matchesSpecialty =
+      selectedSpecialty === "All" ||
       doctor.specialization === selectedSpecialty;
 
     return matchesSearch && matchesSpecialty;
@@ -87,10 +85,13 @@ const Home = () => {
             <div className="relative z-10">
               <h1 className="text-2xl md:text-3xl font-bold mb-2 leading-tight">
                 Find Your Perfect
-                <span className="block text-card-yellow">Healthcare Provider</span>
+                <span className="block text-card-yellow">
+                  Healthcare Provider
+                </span>
               </h1>
               <p className="text-blue-100 text-xs mb-4 max-w-2xl">
-                Connect with verified doctors, book appointments instantly, and manage your health journey all in one place.
+                Connect with verified doctors, book appointments instantly, and
+                manage your health journey all in one place.
               </p>
 
               {/* Search Bar */}
@@ -122,7 +123,9 @@ const Home = () => {
               </div>
               <div>
                 <p className="text-xl font-bold mb-0">{doctors.length}</p>
-                <p className="text-[9px] font-medium opacity-90">Expert Doctors</p>
+                <p className="text-[9px] font-medium opacity-90">
+                  Expert Doctors
+                </p>
               </div>
             </div>
 
@@ -136,8 +139,12 @@ const Home = () => {
                 </span>
               </div>
               <div>
-                <p className="text-xl font-bold mb-0">{specializations.length - 1}</p>
-                <p className="text-[9px] font-medium opacity-90">Specializations</p>
+                <p className="text-xl font-bold mb-0">
+                  {specializations.length - 1}
+                </p>
+                <p className="text-[9px] font-medium opacity-90">
+                  Specializations
+                </p>
               </div>
             </div>
 
@@ -152,7 +159,9 @@ const Home = () => {
               </div>
               <div>
                 <p className="text-xl font-bold mb-0">Instant</p>
-                <p className="text-[9px] font-medium opacity-90">Booking Available</p>
+                <p className="text-[9px] font-medium opacity-90">
+                  Booking Available
+                </p>
               </div>
             </div>
           </div>
@@ -162,7 +171,9 @@ const Home = () => {
         <div className="bg-white rounded-xl p-3 shadow-sm">
           <div className="flex items-center gap-2 mb-2">
             <FaHospital className="text-deep-blue text-sm" />
-            <h3 className="text-xs font-bold text-gray-800">Filter by Specialty</h3>
+            <h3 className="text-xs font-bold text-gray-800">
+              Filter by Specialty
+            </h3>
           </div>
           <div className="flex flex-wrap gap-2">
             {specializations.map((spec) => (
@@ -203,7 +214,9 @@ const Home = () => {
                 <FaStethoscope className="text-deep-blue text-lg" />
               </div>
             </div>
-            <p className="text-gray-500 mt-3 text-sm font-medium">Loading doctors...</p>
+            <p className="text-gray-500 mt-3 text-sm font-medium">
+              Loading doctors...
+            </p>
           </div>
         ) : filteredDoctors.length === 0 ? (
           /* Empty State */
@@ -212,16 +225,16 @@ const Home = () => {
               <FaSearch className="text-gray-400 text-2xl" />
             </div>
             <h3 className="text-xl font-bold text-gray-800 mb-2">
-              {searchTerm || selectedSpecialty !== "All" 
-                ? "No Doctors Found" 
+              {searchTerm || selectedSpecialty !== "All"
+                ? "No Doctors Found"
                 : "No Doctors Available"}
             </h3>
             <p className="text-sm text-gray-500 mb-4 max-w-md mx-auto">
               {searchTerm
                 ? `No results found for "${searchTerm}" ${selectedSpecialty !== "All" ? `in ${selectedSpecialty}` : ""}`
                 : selectedSpecialty !== "All"
-                ? `No doctors available in ${selectedSpecialty} specialty`
-                : "Check back later for available doctors"}
+                  ? `No doctors available in ${selectedSpecialty} specialty`
+                  : "Check back later for available doctors"}
             </p>
             {(searchTerm || selectedSpecialty !== "All") && (
               <button
@@ -270,10 +283,12 @@ const Home = () => {
                     <h3 className="text-sm font-bold text-gray-900 mb-0.5 group-hover:text-deep-blue transition-colors line-clamp-1">
                       Dr. {doctor.firstName} {doctor.lastName}
                     </h3>
-                    
+
                     <div className="flex items-center gap-1 text-[11px] text-gray-600 mb-2">
                       <FaStethoscope className="text-gray-400 text-[9px]" />
-                      <span className="line-clamp-1">{doctor.specialization || "General Physician"}</span>
+                      <span className="line-clamp-1">
+                        {doctor.specialization || "General Physician"}
+                      </span>
                     </div>
 
                     {/* Stats Row - COMPACT */}

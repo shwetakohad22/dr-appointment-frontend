@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../api";
 import toast from "react-hot-toast";
 import {
   FaStethoscope,
@@ -25,14 +25,11 @@ const Register = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post(
-        "http://localhost:8001/api/user/register",
-        {
-          name,
-          email,
-          password,
-        },
-      );
+      const response = await api.post("/api/user/register", {
+        name,
+        email,
+        password,
+      });
 
       if (response.data.success) {
         toast.success(response.data.message);
