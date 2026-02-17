@@ -1,70 +1,94 @@
-# Getting Started with Create React App
+# 🏥 Doctor Appointment Booking System
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<p align="center">
+  <img src="https://readme-typing-svg.herokuapp.com?size=28&duration=4000&color=0A66C2&center=true&vCenter=true&width=900&lines=Doctor+Appointment+Booking+System;MERN+Stack+Full+Stack+Project;Admin+%7C+Doctor+%7C+User+Dashboard;Built+With+React+%2B+Tailwind+%2B+AntD" />
+</p>
+<p align="center">
+  <a href="https://appointment.shwetakohad.in">
+    <img src="https://img.shields.io/badge/🌐_Live_Demo-Open_Project-0A66C2?style=for-the-badge" />
+  </a>
+  <img src="https://img.shields.io/badge/Stack-MERN-13aa52?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Auth-JWT-blue?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/UI-Tailwind+AntD-purple?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Status-Production-success?style=for-the-badge" />
+</p>
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 🚀 Live Application
 
-### `npm start`
+👉 **https://appointment.shwetakohad.in**
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+# 📌 Project Overview
 
-### `npm test`
+A full-stack **Doctor Appointment Booking Platform** built using the **MERN Stack**.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+This application provides a complete role-based workflow system:
 
-### `npm run build`
+- 👤 **Users** can register and book appointments  
+- 🩺 **Doctors** can approve or reject appointment requests  
+- 🛠 **Admin** can verify and manage doctor applications  
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The system ensures secure authentication, structured approval flows, and a modern responsive UI.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+# 🛠 Tech Stack
 
-### `npm run eject`
+## 💻 Frontend
+- ⚛️ React.js  
+- 🎨 Tailwind CSS  
+- 🧩 Ant Design (AntD)  
+- 🔄 Redux  
+- 🔗 Axios  
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## 🖥 Backend
+- 🟢 Node.js  
+- 🚂 Express.js  
+- 🍃 MongoDB  
+- 🔐 JWT Authentication  
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+# 👥 Role-Based Panels
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## 👤 User Panel
+- Register & Login  
+- Book appointment with available doctors  
+- Track appointment status  
+- Apply as a Doctor  
 
-## Learn More
+---
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 🩺 Doctor Panel
+- View appointment requests  
+- Approve / Reject appointments  
+- Manage profile information  
+- Dashboard access  
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
 
-### Code Splitting
+## 🛠 Admin Panel
+- View all users  
+- Review doctor applications  
+- Approve / Reject doctor requests  
+- Manage platform data  
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+---
 
-### Analyzing the Bundle Size
+# 🔄 Application Workflow
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```mermaid
+flowchart LR
+A[User Registers] --> B[Book Appointment]
+B --> C[Doctor Receives Request]
+C --> D{Approve?}
+D -->|Yes| E[Appointment Confirmed]
+D -->|No| F[Appointment Rejected]
+A --> G[Apply as Doctor]
+G --> H[Admin Reviews]
+H --> I{Approve?}
+I -->|Yes| J[Doctor Account Activated]
+I -->|No| K[Application Rejected]
