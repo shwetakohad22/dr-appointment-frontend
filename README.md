@@ -34,47 +34,47 @@ This application provides a complete role-based workflow system:
 The system ensures secure authentication, structured approval flows, and a modern responsive UI.
 
 ---
+## 🛠 Tech Stack
 
-# 🛠 Tech Stack
-
-## 💻 Frontend
-- ⚛️ React.js  
-- 🎨 Tailwind CSS  
-- 🧩 Ant Design (AntD)  
-- 🔄 Redux  
-- 🔗 Axios  
-
-## 🖥 Backend
-- 🟢 Node.js  
-- 🚂 Express.js  
-- 🍃 MongoDB  
-- 🔐 JWT Authentication  
+| Frontend                        | Backend                    |
+|--------------------------------|----------------------------|
+| ⚛️ React.js                    | 🟢 Node.js                 |
+| 🎨 Tailwind CSS                | 🚂 Express.js              |
+| 🧩 Ant Design (AntD)           | 🍃 MongoDB                 |
+| 🔄 Redux                      | 🔐 JWT Authentication     |
+| 🔗 Axios                      |                            |
 
 ---
+
+## 📸 Project Screenshots
+
+<p align="center">
+  <img src="./project-screenshots/home.png" width="200" />&nbsp;
+  <img src="./project-screenshots/login.png" width="200" />&nbsp;
+  <img src="./project-screenshots/applyDoctor.png" width="200" />
+</p>
+
+<p align="center">
+  <img src="./project-screenshots/bookAppointment.png" width="200" />&nbsp;
+  <img src="./project-screenshots/doctorDashboard.png" width="200" />&nbsp;
+  <img src="./project-screenshots/doctorAllAppointment.png" width="200" />
+</p>
+
+<p align="center">
+  <img src="./project-screenshots/userDashboard.png" width="200" />&nbsp;
+  <img src="./project-screenshots/userAppointment.png" width="200" />&nbsp;
+  <img src="./project-screenshots/adminDashboard.png" width="200" />
+</p>
+
 
 # 👥 Role-Based Panels
 
-## 👤 User Panel
-- Register & Login  
-- Book appointment with available doctors  
-- Track appointment status  
-- Apply as a Doctor  
-
----
-
-## 🩺 Doctor Panel
-- View appointment requests  
-- Approve / Reject appointments  
-- Manage profile information  
-- Dashboard access  
-
----
-
-## 🛠 Admin Panel
-- View all users  
-- Review doctor applications  
-- Approve / Reject doctor requests  
-- Manage platform data  
+| 👤 User Panel                       | 🩺 Doctor Panel                   | 🛠 Admin Panel                    |
+|-----------------------------------|---------------------------------|---------------------------------|
+| - Register & Login                 | - View appointment requests     | - View all users                |
+| - Book appointment with doctors   | - Approve / Reject appointments | - Review doctor applications   |
+| - Track appointment status        | - Manage profile information    | - Approve / Reject doctor requests |
+| - Apply as a Doctor               | - Dashboard access              | - Manage platform data          |
 
 ---
 
